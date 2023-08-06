@@ -11,11 +11,12 @@ import java.util.Scanner;
 
 public class Client {
     public static void main(String[] args) throws InterruptedException, RemoteException, NotBoundException, ServerNotActiveException {
-            Scanner scanner = new Scanner(System.in);
+            Scanner scanner = new Scanner(System.in);//use scanner to input
+            //find the localhost port:1099
             Registry registry = LocateRegistry.getRegistry("localhost", 1099);
-            //use scanner to input
+            //find the "Calculator" which is registered
             Calculator calculator = (Calculator) registry.lookup("Calculator");
-
+            //in order to make each client use different stacks,I set the clientId to finish my work
             System.out.print("Enter client ID: ");
             String clientId = scanner.nextLine();
             calculator.setClientId(clientId);

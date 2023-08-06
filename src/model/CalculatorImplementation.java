@@ -5,17 +5,22 @@ import java.rmi.server.ServerNotActiveException;
 import java.util.*;
 
 public class CalculatorImplementation implements Calculator , Serializable {
+    //I decide to use clientID to make each client use different stacks
     public String clientID;
     private Map<String, Stack<String>> client;
 
+
+
     public CalculatorImplementation() throws RemoteException{
+        //use map to aim to different clients
         client = new HashMap<>();
+
     }
     public void setClientId(String clientid){
         clientID=clientid;
     }
     public Stack<String> getClient() throws ServerNotActiveException {
-
+        //get the unique clientID
         return client.computeIfAbsent(clientID, k-> new Stack<>());
     }
 
@@ -29,6 +34,9 @@ public class CalculatorImplementation implements Calculator , Serializable {
     @Override
         public void pushOperation(String operator) throws ServerNotActiveException {
         Stack<String> stack = getClient();
+        //because it requires me to push the operator into the stack so the stack is String
+        //but in order to calculate,need int,so use arraylist to do that
+        //every operator needs to first push the operator and then pop all stack finally push the result in
             if (operator.equals("min") || operator.equals("max") || operator.equals("lcm") || operator.equals("gcd")) {
                 stack.push(operator);
                 stack.pop();
@@ -43,6 +51,7 @@ public class CalculatorImplementation implements Calculator , Serializable {
                 }
                 int result = 0;
 
+                //calculate decided by operator
                 switch (operator) {
                     case "min":
                         result = Collections.min(poppedValues);
@@ -64,7 +73,7 @@ public class CalculatorImplementation implements Calculator , Serializable {
 
         }
     private int calculateLCM(List<Integer> values) {
-
+        //a way to calculateLCM
         int lcm = values.get(0);
 
         for (int value : values) {
@@ -74,7 +83,7 @@ public class CalculatorImplementation implements Calculator , Serializable {
         return lcm;
     }
     private int calculateGCD(List<Integer> values) {
-
+        //a way to calculateGCD
         int gcd = values.get(0);
 
         for (int value : values) {
@@ -104,15 +113,16 @@ public class CalculatorImplementation implements Calculator , Serializable {
             }
             @Override
             public boolean isEmpty () throws ServerNotActiveException {
+            //check if the stack is empty
                 Stack<String> stack = getClient();
                 return stack.isEmpty();
             }
 
             @Override
             public int delayPop (int millis) throws InterruptedException, ServerNotActiveException {
+            //here just simply use Thread.sleep() and then pop the value
                 Stack<String> stack = getClient();
                 Thread.sleep(millis);
-
                 return Integer.parseInt(stack.pop());
             }
         }
