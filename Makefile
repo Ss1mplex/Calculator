@@ -33,7 +33,7 @@ run_client1: $(BIN_DIR)/Client
 run_client2: $(BIN_DIR)/Client
 	java -cp $(BIN_DIR) Client < $(SRC_DIR)/Client/input_client2.txt
 
-run_client2: $(BIN_DIR)/Client
+run_client3: $(BIN_DIR)/Client
 	java -cp $(BIN_DIR) Client < $(SRC_DIR)/Client/input_client3.txt
 
 server: $(SERVER_CLASSES) $(MODEL_CLASSES)
