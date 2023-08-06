@@ -27,8 +27,17 @@ all: client server
 
 client: $(CLIENT_CLASSES)
 
-server: $(SERVER_CLASSES) $(MODEL_CLASSES)
+run_client1: $(BIN_DIR)/Client
+	java -cp $(BIN_DIR) Client < $(SRC_DIR)/Client/input_client1.txt
 
+run_client2: $(BIN_DIR)/Client
+	java -cp $(BIN_DIR) Client < $(SRC_DIR)/Client/input_client2.txt
+
+run_client2: $(BIN_DIR)/Client
+	java -cp $(BIN_DIR) Client < $(SRC_DIR)/Client/input_client3.txt
+
+server: $(SERVER_CLASSES) $(MODEL_CLASSES)
+	java -cp $(BIN_DIR) Server.Server
 # Compile rule
 $(BIN_DIR)/%.class: $(SRC_DIR)/%.java | $(BIN_DIR)
 	$(JAVAC) $(JFLAGS) $<

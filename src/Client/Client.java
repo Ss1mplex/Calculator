@@ -13,19 +13,20 @@ public class Client {
     public static void main(String[] args) throws InterruptedException, RemoteException, NotBoundException, ServerNotActiveException {
             Scanner scanner = new Scanner(System.in);
             Registry registry = LocateRegistry.getRegistry("localhost", 1099);
-
+            //use scanner to input
             Calculator calculator = (Calculator) registry.lookup("Calculator");
 
             System.out.print("Enter client ID: ");
             String clientId = scanner.nextLine();
             calculator.setClientId(clientId);
 
+            //find instructions and decide what to do next
             while (true) {
-                    System.out.println("1. Push Value");
-                    System.out.println("2. Push Operation");
-                    System.out.println("3. Pop Value");
-                    System.out.println("4. Is Empty?");
-                    System.out.println("5. Delayed Pop");
+                    System.out.println("1. PushValue");
+                    System.out.println("2. PushOperation");
+                    System.out.println("3. PopValue");
+                    System.out.println("4. IsEmpty?");
+                    System.out.println("5. DelayedPop");
                     System.out.println("0. Exit");
                     System.out.print("Enter your choice: ");
                     int choice = scanner.nextInt();
