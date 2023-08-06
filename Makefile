@@ -26,6 +26,8 @@ MODEL_CLASSES = $(MODEL_SOURCES:$(SRC_DIR)/%.java=$(BIN_DIR)/%.class)
 all: client server
 
 client: $(CLIENT_CLASSES)
+$(BIN_DIR)/%: $(SRC_DIR)/%/Client.java $(BIN_DIR)
+	javac -d $(BIN_DIR) $<
 
 run_client1: $(BIN_DIR)/Client
 	java -cp $(BIN_DIR) Client < $(SRC_DIR)/Client/input_client1.txt
@@ -33,11 +35,8 @@ run_client1: $(BIN_DIR)/Client
 run_client2: $(BIN_DIR)/Client
 	java -cp $(BIN_DIR) Client < $(SRC_DIR)/Client/input_client2.txt
 
-run_client3: $(BIN_DIR)/Client
-	java -cp $(BIN_DIR) Client < $(SRC_DIR)/Client/input_client3.txt
-
 server: $(SERVER_CLASSES) $(MODEL_CLASSES)
-	java -cp $(BIN_DIR) Server.Server
+
 # Compile rule
 $(BIN_DIR)/%.class: $(SRC_DIR)/%.java | $(BIN_DIR)
 	$(JAVAC) $(JFLAGS) $<
